@@ -12,7 +12,7 @@ To run this project, you need to set up a `.env` file in the /foodsearch/ direct
 
 ```dotenv
 # Django secret key
-DJANGO_SECRET_KEY=your_django_secret_key_here
+SECRET_KEY=your_django_secret_key_here
 
 # USDA API key
 USDA_API_KEY=your_api_key_here
