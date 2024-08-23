@@ -1,0 +1,68 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* Light cyan background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+#search-container {
+    position: relative;
+    text-align: center;
+}
+
+#food-search {
+    width: 300px; /* Fixed width for the search bar */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    outline: none; /* Remove default focus outline */
+}
+
+#food-search:focus {
+    border-color: #00796b; /* Change border color on focus */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#food-list {
+    position: absolute;
+    top: 100%; /* Position below the search bar */
+    left: 0;
+    width: 100%; /* Match the width of the search bar */
+    border: 1px solid #ccc;
+    border-top: none; /* Remove top border to connect with the search bar */
+    border-radius: 0 0 5px 5px; /* Round bottom corners */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 200px; /* Set a maximum height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    z-index: 1000; /* Ensure it appears above other elements */
+    display: none; /* Initially hidden */
+}
+
+#food-list div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+#food-list div:hover {
+    background-color: #f1f1f1;
+}
+
+#nutrition-info {
+    margin-left: 20px; /* Space between search bar and nutrition info */
+    max-width: 400px; /* Limit width of the info box */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

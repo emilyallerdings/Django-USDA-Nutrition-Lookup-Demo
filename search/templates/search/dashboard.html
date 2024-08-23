@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Food Search</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'search/styles.css' %}">
+</head>
+<body>
+    <div id="search-container">
+        <input type="text" id="food-search" placeholder="Search for a food..." autocomplete="off">
+        <div id="food-list"></div>
+    </div>
+    <div id="nutrition-info">
+        <h3>Nutrition Information</h3>
+        <p id="nutrition-details">Select a food item to see the details.</p>
+    </div>
+
+    <script>
+        document.getElementById('food-search').addEventListener('input', function() {
+            const query = this.value;
+            if (query.length > 2) {
+                fetch(`/search/?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const foodList = document.getElementById('food-list');
+                        foodList.innerHTML = '';
+                        data.forEach(food => {
+                            const div = document.createElement('div');
+                            div.textContent = food.description;
+                            div.dataset.foodId = food.id; // Store the food ID for later
+                            foodList.appendChild(div);
+                        });
+                        foodList.style.display = data.length ? 'block' : 'none';
+                    });
+            } else {
+                document.getElementById('food-list').style.display = 'none';
+                document.getElementById('nutrition-details').textContent = 'Select a food item to see the details.';
+            }
+        });
+
+        document.getElementById('food-list').addEventListener('click', function(e) {
+            if (e.target && e.target.nodeName === 'DIV') {
+                const foodId = e.target.dataset.foodId;
+                fetch(`/nutrition/?query=${foodId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        var details = `
+                            <strong>${data.name}</strong><br>
+                        `;
+                        var nutrients = data.nutrients
+
+                        data.nutrients.forEach(nutrient => {
+                            details = details.concat("<br>", nutrient.name, ": ", nutrient.amount, nutrient.units)
+                        })
+                        
+                        document.getElementById('nutrition-details').innerHTML = details;
+                    });
+                document.getElementById('food-search').value = e.target.textContent;
+                document.getElementById('food-list').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
